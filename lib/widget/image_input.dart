@@ -111,14 +111,13 @@ class _ImageInputState extends State<ImageInput> {
           width: 10,
         ),
         Expanded(
-          child: FlatButton.icon(
+          child: TextButton.icon(
             onPressed: _takePicture,
             icon: const Icon(Icons.camera),
             label: const Text(
               'Take Picture',
               textAlign: TextAlign.center,
             ),
-            textColor: Theme.of(context).primaryColor,
           ),
         ),
       ],

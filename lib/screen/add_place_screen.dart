@@ -1,12 +1,12 @@
 import 'dart:io' as io;
 
 import 'package:flutter/material.dart';
+import 'package:great_place/model/place.dart';
 import 'package:great_place/provider/great_places.dart';
 import 'package:great_place/widget/image_input.dart';
+import 'package:great_place/widget/location_input.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-
-import '../model/place.dart';
 
 class AddPlaceScreen extends StatefulWidget {
   static const routeName = '/addPlace';
@@ -19,14 +19,21 @@ class AddPlaceScreen extends StatefulWidget {
 class _AddPlaceScreenState extends State<AddPlaceScreen> {
   final TextEditingController _titleController = TextEditingController();
   XFile? _pickedImage;
+  PlaceLocation? _pickedLocation;
 
   void _selectImage(io.File pickedImage) {
     _pickedImage = XFile(pickedImage.path);
     print('This is Selected Image $pickedImage');
   }
 
+  void _selectPlace(double lat, double lon) {
+    _pickedLocation = PlaceLocation(latitude: lat, longitude: lon);
+  }
+
   void _savePlace() {
-    if (_titleController.text.isEmpty || _pickedImage == null) {
+    if (_titleController.text.isEmpty ||
+        _pickedImage == null ||
+        _pickedLocation == null) {
       print(_titleController.text.isEmpty);
       print(_pickedImage);
       print('_AddPlaceScreenState._savePlace');
@@ -37,7 +44,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
               title: const Text('An Error Occurred'),
               content: const Text('Please add Place or Image'),
               actions: [
-                FlatButton(
+                TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -51,6 +58,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
     Provider.of<GreatPlaces>(context, listen: false).addPlace(
       _titleController.text,
       _pickedImage!,
+      _pickedLocation!,
     );
     Navigator.of(context).pop();
   }
@@ -80,18 +88,22 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                       height: 10,
                     ),
                     ImageInput(onSelectImage: _selectImage),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    LocationInput(onSelectPlace: _selectPlace),
                   ],
                 ),
               ),
             ),
           ),
-          RaisedButton.icon(
+          ElevatedButton.icon(
             onPressed: _savePlace,
             icon: const Icon(Icons.add),
             label: const Text('Add Place'),
-            elevation: 0,
-            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            color: Theme.of(context).accentColor,
+            // elevation: 0,
+            // materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            // color: Theme.of(context).colorScheme.secondary,
           )
         ],
       ),
