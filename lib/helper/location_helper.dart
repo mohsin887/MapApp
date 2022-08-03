@@ -2,8 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-// const apiKey = 'AIzaSyB5pan3iafSwAIv2o5XdLJI_ZvfTSCMDfI';
-const apiKey = 'AIzaSyCrjmr0iFbaySNjUajBGtmJx9iehpyr4dY';
+const apiKey = ''; // class
 
 class LocationHelper {
   static String generateLocationPreviewImage(
