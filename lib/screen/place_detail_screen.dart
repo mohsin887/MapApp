@@ -20,7 +20,7 @@ class PlaceDetailScreen extends StatelessWidget {
         title: Text(selectedPlace.title),
       ),
       body: Column(
-        children: <Widget>[
+        children: [
           SizedBox(
             height: 250,
             width: double.infinity,
@@ -44,7 +44,7 @@ class PlaceDetailScreen extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          FlatButton(
+          MaterialButton(
             textColor: Theme.of(context).primaryColor,
             onPressed: () {
               Navigator.of(context).push(
